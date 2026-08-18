@@ -2,24 +2,17 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { products } from '@/app/data/products';
+import { categoriesData, products } from '@/app/data/products';
 import { useCart } from '@/app/context/cart-context';
-import { ShoppingBag, ArrowRight, Star, Sparkles, Truck, ShieldCheck } from 'lucide-react';
+import { ShoppingBag, ArrowRight, Star, Sparkles } from 'lucide-react';
 
 export default function VelqenStore() {
   const { totalItems, setIsCartOpen } = useCart();
 
-  const categories = [
-    { name: "Nylon Crescents", tag: "Viral Silhouette", image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80", link: "/products/1" },
-    { name: "Everyday Totes", tag: "15\" Laptop Ready", image: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80", link: "/products/2" },
-    { name: "Modular Slings", tag: "Hands-Free Utility", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80", link: "/products/3" },
-    { name: "Utility Belt Packs", tag: "Compact Carry", image: "https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?auto=format&fit=crop&w=600&q=80", link: "/products/4" }
-  ];
-
   return (
     <div className="min-h-screen bg-[#F4EFE6] text-[#151C12]">
       
-      {/* 1. TOP MARQUEE (Matcha Green) */}
+      {/* 1. TOP MARQUEE */}
       <div className="bg-[#283621] text-[#EFE7D3] text-xs py-2.5 px-4 text-center font-medium tracking-wide flex justify-center items-center gap-6">
         <span>🇬🇧 Free UK Standard Delivery</span>
         <span className="opacity-30">•</span>
@@ -32,14 +25,15 @@ export default function VelqenStore() {
       <header className="sticky top-0 z-40 bg-[#F4EFE6]/95 backdrop-blur-md border-b border-[#E2D8C3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           
+          {/* 4 Category Navigation Tabs */}
           <nav className="hidden md:flex items-center gap-8 text-xs font-bold tracking-wider uppercase text-[#283621]">
-            <Link href="/products/1" className="hover:text-[#5B7349] transition">Crescents</Link>
-            <Link href="/products/2" className="hover:text-[#5B7349] transition">Totes</Link>
-            <Link href="/products/3" className="hover:text-[#5B7349] transition">Slings</Link>
-            <Link href="/products/4" className="hover:text-[#5B7349] transition">Packs</Link>
+            {categoriesData.map((cat) => (
+              <Link key={cat.slug} href={`/category/${cat.slug}`} className="hover:text-[#5B7349] transition">
+                {cat.name}
+              </Link>
+            ))}
           </nav>
 
-          {/* Logo with Outfit font */}
           <div className="text-center">
             <Link href="/" className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#283621]" style={{ fontFamily: "'Outfit', sans-serif" }}>
               VELQEN<span className="text-[#849B72]">.</span>
@@ -61,7 +55,7 @@ export default function VelqenStore() {
         </div>
       </header>
 
-      {/* 3. HERO (Rich Deep Matcha Block with Cream Typography) */}
+      {/* 3. HERO */}
       <section className="px-4 sm:px-6 lg:px-8 py-8 max-w-7xl mx-auto">
         <div className="bg-[#283621] text-[#F4EFE6] rounded-3xl p-8 sm:p-14 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           
@@ -83,8 +77,8 @@ export default function VelqenStore() {
               <a href="#collection" className="px-8 py-4 bg-[#F4EFE6] hover:bg-white text-[#283621] font-bold rounded-full text-xs uppercase tracking-wider transition flex items-center gap-2 shadow-lg">
                 Explore The Drop <ArrowRight className="w-4 h-4 text-[#283621]" />
               </a>
-              <a href="#philosophy" className="px-7 py-4 bg-transparent hover:bg-[#3A4E31] text-[#EFE7D3] border border-[#506843] font-bold rounded-full text-xs uppercase tracking-wider transition">
-                Our Standards
+              <a href="#categories" className="px-7 py-4 bg-transparent hover:bg-[#3A4E31] text-[#EFE7D3] border border-[#506843] font-bold rounded-full text-xs uppercase tracking-wider transition">
+                Shop By Category
               </a>
             </div>
           </div>
@@ -112,66 +106,33 @@ export default function VelqenStore() {
         </div>
       </section>
 
-      {/* 4. VALUE PILLARS */}
-      <section id="philosophy" className="py-12 border-y border-[#E2D8C3] bg-[#ECE4D0]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
-            <div className="bg-[#F4EFE6] p-6 rounded-2xl border border-[#DCD0B4]">
-              <span className="text-xs font-extrabold uppercase text-[#5B7349] tracking-wider">01 / Aesthetics</span>
-              <h3 className="text-lg font-bold text-[#283621] mt-1" style={{ fontFamily: "'Outfit', sans-serif" }}>Effortless & Expressive</h3>
-              <p className="text-xs text-[#52614B] mt-2 leading-relaxed">
-                Clean silhouettes and rich earth tones engineered to pair naturally with your everyday wardrobe.
-              </p>
-            </div>
-
-            <div className="bg-[#F4EFE6] p-6 rounded-2xl border border-[#DCD0B4]">
-              <span className="text-xs font-extrabold uppercase text-[#5B7349] tracking-wider">02 / Utility</span>
-              <h3 className="text-lg font-bold text-[#283621] mt-1" style={{ fontFamily: "'Outfit', sans-serif" }}>Individuality & Lifestyle</h3>
-              <p className="text-xs text-[#52614B] mt-2 leading-relaxed">
-                Featherweight crinkle nylon and multi-compartment interior layouts built for daily active routines.
-              </p>
-            </div>
-
-            <div className="bg-[#F4EFE6] p-6 rounded-2xl border border-[#DCD0B4]">
-              <span className="text-xs font-extrabold uppercase text-[#5B7349] tracking-wider">03 / Fair Pricing</span>
-              <h3 className="text-lg font-bold text-[#283621] mt-1" style={{ fontFamily: "'Outfit', sans-serif" }}>Optimized Spending</h3>
-              <p className="text-xs text-[#52614B] mt-2 leading-relaxed">
-                Direct UK distribution. Japanese smooth zips and reinforced stitching without inflated designer prices.
-              </p>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* 5. SHOP BY SILHOUETTE */}
-      <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 4. SHOP BY CATEGORY (4 Tabs/Cards) */}
+      <section id="categories" className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#5B7349]">Categories</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-[#5B7349]">Collections</span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#283621] mt-1" style={{ fontFamily: "'Outfit', sans-serif" }}>
-            Shop by Silhouette
+            Shop by Category
           </h2>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {categories.map((cat, i) => (
-            <Link href={cat.link} key={i} className="group relative rounded-2xl overflow-hidden bg-[#E2D8C3] aspect-[4/5] block shadow-sm hover:shadow-md transition">
+          {categoriesData.map((cat) => (
+            <Link href={`/category/${cat.slug}`} key={cat.slug} className="group relative rounded-2xl overflow-hidden bg-[#E2D8C3] aspect-[4/5] block shadow-sm hover:shadow-md transition">
               <img 
                 src={cat.image} 
                 alt={cat.name} 
                 className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#151C12]/80 via-transparent to-transparent flex flex-col justify-end p-5">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#EFE7D3]">{cat.tag}</span>
-                <h4 className="text-sm sm:text-base font-bold text-white mt-0.5" style={{ fontFamily: "'Outfit', sans-serif" }}>{cat.name}</h4>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#151C12]/85 via-transparent to-transparent flex flex-col justify-end p-5">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#EFE7D3]">{cat.headline}</span>
+                <h4 className="text-sm sm:text-base font-bold text-white mt-0.5" style={{ fontFamily: "'Outfit', sans-serif" }}>{cat.name} &rarr;</h4>
               </div>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* 6. FEATURED PRODUCTS */}
+      {/* 5. ALL 12 FEATURED PRODUCTS */}
       <section id="collection" className="py-16 bg-[#ECE4D0] border-t border-[#E2D8C3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-10">
@@ -224,7 +185,7 @@ export default function VelqenStore() {
         </div>
       </section>
 
-      {/* 7. FOOTER */}
+      {/* 6. FOOTER */}
       <footer className="bg-[#202C1B] text-[#D0C7B0] py-14 text-xs border-t border-[#2E3D27]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
           
@@ -239,12 +200,13 @@ export default function VelqenStore() {
           </div>
 
           <div>
-            <h5 className="font-bold text-white uppercase tracking-wider mb-3">Silhouettes</h5>
+            <h5 className="font-bold text-white uppercase tracking-wider mb-3">Categories</h5>
             <ul className="space-y-2 text-[#A8A08A]">
-              <li><Link href="/products/1" className="hover:text-white transition">Nylon Crescents</Link></li>
-              <li><Link href="/products/2" className="hover:text-white transition">Everyday Totes</Link></li>
-              <li><Link href="/products/3" className="hover:text-white transition">Crossbody Slings</Link></li>
-              <li><Link href="/products/4" className="hover:text-white transition">Utility Packs</Link></li>
+              {categoriesData.map((cat) => (
+                <li key={cat.slug}>
+                  <Link href={`/category/${cat.slug}`} className="hover:text-white transition">{cat.name}</Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -259,7 +221,7 @@ export default function VelqenStore() {
 
           <div>
             <h5 className="font-bold text-white uppercase tracking-wider mb-3">Verified Platforms</h5>
-            <p className="text-[#A8A08A] mb-3">Shop genuine Velqen carry on official partner stores:</p>
+            <p className="text-[#A8A08A] mb-3">Shop genuine Velqen carry on official storefronts:</p>
             <div className="flex gap-2">
               <span className="px-3 py-1 bg-[#2C3D24] text-[#EFE7D3] rounded text-xs font-semibold">Amazon UK</span>
               <span className="px-3 py-1 bg-[#2C3D24] text-[#EFE7D3] rounded text-xs font-semibold">eBay UK</span>
