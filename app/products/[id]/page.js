@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { products } from '@/app/data/products';
-import { useCart } from '@/app/context/CartContext';
+import { useCart } from '@/app/context/cart-context';
 import { 
   ShoppingBag, Star, Truck, ShieldCheck, ArrowLeft, 
   Sparkles, Check 

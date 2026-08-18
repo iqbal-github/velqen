@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { products } from '@/app/data/products';
-import { useCart } from '@/app/context/CartContext';
+import { useCart } from '@/app/context/cart-context';
 import { ShoppingBag, ArrowRight, Star, Sparkles } from 'lucide-react';
 
 export default function VelqenStore() {
