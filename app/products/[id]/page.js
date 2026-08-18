@@ -4,20 +4,23 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { products } from '@/app/data/products';
+import { useCart } from '@/app/context/CartContext';
 import { 
   ShoppingBag, Star, Truck, ShieldCheck, ArrowLeft, 
-  Check, Lock, Sparkles, ExternalLink 
+  Sparkles, Check 
 } from 'lucide-react';
 
 export default function ProductDetailPage() {
   const params = useParams();
   const product = products.find(p => p.id === params.id) || products[0];
 
+  const { addToCart, totalItems, setIsCartOpen } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
 
-  const handleAdd = () => {
+  const handleAddToCart = () => {
+    addToCart(product, quantity);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
@@ -40,18 +43,21 @@ export default function ProductDetailPage() {
           <Link href="/" className="text-xl font-black tracking-widest uppercase text-[#3A472E]">
             VELQEN
           </Link>
-          <Link href="/" className="flex items-center gap-1 bg-[#3A472E] text-white px-3.5 py-1.5 rounded-full text-xs font-bold">
+          <button 
+            onClick={() => setIsCartOpen(true)}
+            className="flex items-center gap-1.5 bg-[#3A472E] text-white px-3.5 py-1.5 rounded-full text-xs font-bold hover:bg-[#2D3824] transition shadow-sm"
+          >
             <ShoppingBag className="w-3.5 h-3.5" />
-            <span>Bag</span>
-          </Link>
+            <span>Bag ({totalItems})</span>
+          </button>
         </div>
       </header>
 
-      {/* Product Detail Main */}
+      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           
-          {/* Left: Gallery (Depop Style) */}
+          {/* Gallery */}
           <div className="space-y-4">
             <div className="aspect-square rounded-3xl overflow-hidden bg-[#EBE5DC] border border-[#E3DDD3] shadow-sm">
               <img 
@@ -75,7 +81,7 @@ export default function ProductDetailPage() {
             </div>
           </div>
 
-          {/* Right: Info & Purchase Card */}
+          {/* Right Product Buy Box */}
           <div className="bg-white rounded-3xl p-6 sm:p-10 border border-[#EBE5DC] shadow-sm space-y-6">
             
             <div>
@@ -91,11 +97,11 @@ export default function ProductDetailPage() {
               <p className="text-xs sm:text-sm text-[#55634E] mt-1">{product.tagline}</p>
             </div>
 
-            {/* Price & Rating */}
+            {/* Price */}
             <div className="flex items-baseline justify-between border-y border-[#F0EBE3] py-4">
               <div>
                 <span className="text-3xl font-black text-[#262F1F]">£{product.price.toFixed(2)}</span>
-                <span className="text-xs text-slate-500 ml-2">Free UK Delivery Included</span>
+                <span className="text-xs text-slate-500 ml-2">Free UK Standard Delivery</span>
               </div>
               <div className="flex items-center gap-1 text-xs font-bold text-[#62774F]">
                 <Star className="w-4 h-4 fill-[#62774F]" />
@@ -104,7 +110,7 @@ export default function ProductDetailPage() {
               </div>
             </div>
 
-            {/* Quantity Selector & Action */}
+            {/* Add to Bag Action */}
             <div className="space-y-3">
               <div className="flex items-center gap-4">
                 <div className="flex items-center border border-[#EBE5DC] rounded-xl bg-[#FAF8F5] px-3 py-2">
@@ -122,15 +128,14 @@ export default function ProductDetailPage() {
                     +
                   </button>
                 </div>
+
                 <button 
-                  onClick={handleAdd}
-                  className={`flex-1 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 shadow-md ${
-                    added ? 'bg-emerald-700 text-white' : 'bg-[#3A472E] hover:bg-[#262F1F] text-white'
-                  }`}
+                  onClick={handleAddToCart}
+                  className="flex-1 py-3.5 bg-[#3A472E] hover:bg-[#262F1F] text-white rounded-xl font-bold text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 shadow-md"
                 >
                   {added ? (
                     <>
-                      <Check className="w-4 h-4" /> Added to Your Bag
+                      <Check className="w-4 h-4 text-amber-300" /> Added to Bag!
                     </>
                   ) : (
                     <>
@@ -140,7 +145,7 @@ export default function ProductDetailPage() {
                 </button>
               </div>
 
-              {/* Verified Marketplaces */}
+              {/* Verified Badges */}
               <div className="bg-[#FAF8F5] p-3 rounded-xl border border-[#EBE5DC] flex items-center justify-between text-xs">
                 <span className="text-[11px] text-[#55634E] font-medium">Also verified to buy via:</span>
                 <div className="flex gap-2">
@@ -150,7 +155,7 @@ export default function ProductDetailPage() {
               </div>
             </div>
 
-            {/* Depop-Style Specs Section */}
+            {/* Specs */}
             <div className="space-y-4 pt-4 border-t border-[#F0EBE3] text-xs">
               <h3 className="font-bold text-[#262F1F] uppercase tracking-wider text-[11px]">Product Specifications</h3>
               
@@ -169,7 +174,6 @@ export default function ProductDetailPage() {
                 </div>
               </div>
 
-              {/* Bullet Features */}
               <ul className="space-y-2 text-[#55634E] pt-2">
                 {product.features.map((feat, i) => (
                   <li key={i} className="flex items-center gap-2">
@@ -180,15 +184,15 @@ export default function ProductDetailPage() {
               </ul>
             </div>
 
-            {/* Trust Assurance */}
+            {/* Guarantees */}
             <div className="grid grid-cols-2 gap-3 pt-4 border-t border-[#F0EBE3] text-[11px]">
               <div className="flex items-center gap-2 text-slate-600">
                 <Truck className="w-4 h-4 text-[#3A472E]" />
-                <span>Fast Dispatch (Amazon FBA / Royal Mail)</span>
+                <span>Amazon FBA / Royal Mail</span>
               </div>
               <div className="flex items-center gap-2 text-slate-600">
                 <ShieldCheck className="w-4 h-4 text-[#3A472E]" />
-                <span>30-Day Hassle-Free UK Returns</span>
+                <span>30-Day UK Returns</span>
               </div>
             </div>
 
