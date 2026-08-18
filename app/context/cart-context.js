@@ -2,14 +2,13 @@
 
 import React, { createContext, useContext, useState } from 'react';
 import Link from 'next/link';
-import { X, Check } from 'lucide-react';
+import { X } from 'lucide-react';
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [lastAddedProduct, setLastAddedProduct] = useState(null);
 
   const addToCart = (product, quantity = 1) => {
     setCart((prev) => {
@@ -23,7 +22,6 @@ export function CartProvider({ children }) {
       }
       return [...prev, { ...product, quantity }];
     });
-    setLastAddedProduct({ ...product, addedQuantity: quantity });
     setIsCartOpen(true);
   };
 
@@ -50,19 +48,17 @@ export function CartProvider({ children }) {
     >
       {children}
 
-      {/* NEXT.CO.UK STYLE MINI-BAG DROPDOWN / POPOVER */}
+      {/* NEXT.CO.UK STYLE MINI-BAG DROPDOWN */}
       {isCartOpen && (
         <div className="fixed inset-0 z-50 overflow-hidden font-sans">
-          {/* Subtle Transparent Backdrop */}
           <div
             onClick={() => setIsCartOpen(false)}
             className="absolute inset-0 bg-black/20 backdrop-blur-[1px] transition-opacity"
           />
 
-          {/* Top-Right Dropdown Modal (Exact Next UK Style) */}
           <div className="absolute top-20 right-4 sm:right-10 w-[92vw] max-w-[400px] bg-white rounded-none border border-neutral-200 shadow-2xl z-50">
             
-            {/* Header: "X ITEMS IN BAG" */}
+            {/* Header */}
             <div className="px-5 py-4 border-b border-neutral-100 flex items-center justify-between">
               <span className="font-extrabold text-xs tracking-wider uppercase text-neutral-900" style={{ fontFamily: "'Outfit', sans-serif" }}>
                 {totalItems} {totalItems === 1 ? 'ITEM' : 'ITEMS'} IN BAG
@@ -84,8 +80,6 @@ export function CartProvider({ children }) {
               ) : (
                 cart.map((item) => (
                   <div key={item.id} className="flex gap-4 items-start pb-4 border-b border-neutral-100 last:border-0 last:pb-0">
-                    
-                    {/* Square Thumbnail */}
                     <div className="w-20 h-20 bg-neutral-100 flex-shrink-0 overflow-hidden border border-neutral-200">
                       <img
                         src={item.images ? item.images[0] : item.image}
@@ -94,7 +88,6 @@ export function CartProvider({ children }) {
                       />
                     </div>
 
-                    {/* Middle Info + Right Price */}
                     <div className="flex-1 flex justify-between gap-2">
                       <div className="space-y-0.5">
                         <h4 className="font-bold text-xs text-neutral-900 leading-snug line-clamp-2" style={{ fontFamily: "'Outfit', sans-serif" }}>
@@ -111,16 +104,14 @@ export function CartProvider({ children }) {
                         </span>
                       </div>
                     </div>
-
                   </div>
                 ))
               )}
             </div>
 
-            {/* Total & Delivery Summary */}
+            {/* Summary & Buttons */}
             {cart.length > 0 && (
               <div className="px-5 py-4 border-t border-neutral-100 bg-neutral-50/50 space-y-3">
-                
                 <div className="flex justify-between items-baseline">
                   <span className="font-extrabold text-sm text-neutral-900" style={{ fontFamily: "'Outfit', sans-serif" }}>
                     Total
@@ -131,28 +122,29 @@ export function CartProvider({ children }) {
                 </div>
 
                 <p className="text-[11px] text-neutral-500">
-                  Excluding UK Standard Delivery (Normally £4.95)
+                  Excluding UK Standard Delivery (Normally £0.00)
                 </p>
 
-                {/* Bottom Two Buttons (Next UK Format) */}
                 <div className="grid grid-cols-2 gap-3 pt-1">
-                  <button
+                  {/* VIEW BAG Button Links to /bag */}
+                  <Link
+                    href="/bag"
                     onClick={() => setIsCartOpen(false)}
-                    className="w-full py-3 bg-white hover:bg-neutral-50 text-neutral-900 text-xs font-extrabold uppercase tracking-wider border border-neutral-900 transition text-center"
+                    className="w-full py-3 bg-white hover:bg-neutral-50 text-neutral-900 text-xs font-extrabold uppercase tracking-wider border border-neutral-900 transition text-center flex items-center justify-center"
                     style={{ fontFamily: "'Outfit', sans-serif" }}
                   >
                     View Bag
-                  </button>
+                  </Link>
 
-                  <button
-                    onClick={() => alert("Proceeding to UK Checkout...")}
-                    className="w-full py-3 bg-neutral-950 hover:bg-neutral-800 text-white text-xs font-extrabold uppercase tracking-wider transition text-center"
+                  <Link
+                    href="/bag"
+                    onClick={() => setIsCartOpen(false)}
+                    className="w-full py-3 bg-neutral-950 hover:bg-neutral-800 text-white text-xs font-extrabold uppercase tracking-wider transition text-center flex items-center justify-center"
                     style={{ fontFamily: "'Outfit', sans-serif" }}
                   >
                     Checkout
-                  </button>
+                  </Link>
                 </div>
-
               </div>
             )}
 
