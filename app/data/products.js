@@ -4,7 +4,7 @@ export const categoriesData = [
     name: "Leather Backpacks",
     headline: "Structured Everyday Daypacks",
     description: "Premium dome-shaped leather backpacks engineered with large capacity organizing compartments.",
-    image: "/leather-backpack.jpg"
+    image: "/leather-backpack.png"
   }
 ];
 
@@ -28,7 +28,7 @@ export const products = [
       { name: "Brown", hex: "#6E473B" }
     ],
     images: [
-      "/leather-backpack.jpg"
+      "/leather-backpack.png"
     ],
     description: "Classic structured dome-shaped leather backpack engineered for daily utility. Features smooth-glide dual metallic top zippers, an exterior front quick-access slip compartment, and an organized spacious interior.",
     dimensions: {
