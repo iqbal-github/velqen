@@ -1,23 +1,23 @@
+import Image from 'next/image';
 import Link from 'next/link';
-import OrganiserDiagram from '@/app/components/organiser-diagram';
-
-// Per-product thumbnail illustrations. Add an entry here as new products
-// get their own concept art/photography.
-const ILLUSTRATIONS = {
-  'under-sink-organiser': OrganiserDiagram,
-};
 
 export default function ProductCard({ product }) {
-  const Illustration = ILLUSTRATIONS[product.slug];
+  const thumbnail = product.colors?.[0];
 
   return (
     <Link
       href={`/products/${product.slug}`}
       className="group flex flex-col overflow-hidden rounded-2xl border border-[#E4DFD1] bg-white transition hover:border-[#C1712F]"
     >
-      <div className="aspect-[4/3] bg-[#F7F4EE]">
-        {Illustration ? (
-          <Illustration className="h-full w-full" />
+      <div className="relative aspect-[4/3] bg-[#F7F4EE]">
+        {thumbnail ? (
+          <Image
+            src={thumbnail.image}
+            alt={`${product.name} in ${thumbnail.name}`}
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover"
+          />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-sm text-[#9AA3B2]">
             Image coming soon

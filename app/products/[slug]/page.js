@@ -1,12 +1,8 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { products, getProductBySlug } from '@/app/data/products';
-import OrganiserDiagram from '@/app/components/organiser-diagram';
+import ColorGallery from '@/app/components/color-gallery';
 import AddToCart from '@/app/components/add-to-cart';
-
-const ILLUSTRATIONS = {
-  'under-sink-organiser': OrganiserDiagram,
-};
 
 export function generateStaticParams() {
   return products.map((product) => ({ slug: product.slug }));
@@ -27,8 +23,6 @@ export default async function ProductPage({ params }) {
   const product = getProductBySlug(slug);
   if (!product) notFound();
 
-  const Illustration = ILLUSTRATIONS[product.slug];
-
   return (
     <div className="mx-auto max-w-6xl px-5 py-12">
       <Link href="/products" className="text-sm font-medium text-[#5B6472] hover:text-[#16233D]">
@@ -36,9 +30,7 @@ export default async function ProductPage({ params }) {
       </Link>
 
       <div className="mt-6 grid gap-12 md:grid-cols-2">
-        <div>
-          {Illustration && <Illustration className="w-full rounded-2xl border border-[#E4DFD1] bg-white" />}
-        </div>
+        <ColorGallery product={product} />
 
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-[#C1712F]">{product.category}</p>
