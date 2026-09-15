@@ -19,19 +19,19 @@ export default function AddToCart({ product }) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-4">
-        <div className="flex items-center rounded-full border border-[#E4DFD1] bg-white">
+        <div className="flex items-center rounded-full border border-[#262D45] bg-[#161C2E]">
           <button
             type="button"
-            className="flex h-11 w-11 items-center justify-center text-[#16233D]"
+            className="flex h-11 w-11 items-center justify-center text-[#F1EDE4]"
             onClick={() => setQty((q) => Math.max(1, q - 1))}
             aria-label="Decrease quantity"
           >
             <Minus size={16} />
           </button>
-          <span className="w-8 text-center text-sm font-semibold text-[#16233D]">{qty}</span>
+          <span className="w-8 text-center text-sm font-semibold text-[#F1EDE4]">{qty}</span>
           <button
             type="button"
-            className="flex h-11 w-11 items-center justify-center text-[#16233D]"
+            className="flex h-11 w-11 items-center justify-center text-[#F1EDE4]"
             onClick={() => setQty((q) => q + 1)}
             aria-label="Increase quantity"
           >
@@ -42,7 +42,7 @@ export default function AddToCart({ product }) {
         <button
           type="button"
           onClick={handleAdd}
-          className="flex-1 rounded-full bg-[#16233D] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#0F1830]"
+          className="flex-1 rounded-full bg-[#F1EDE4] px-6 py-3 text-sm font-semibold text-[#0E1420] transition hover:bg-[#DCD5C4]"
         >
           {added ? 'Added to cart' : 'Add to cart'}
         </button>

@@ -7,11 +7,11 @@ export default function AboutPage() {
   return (
     <div className="mx-auto max-w-3xl px-5 py-16">
       <p className="text-sm font-semibold uppercase tracking-wide text-[#C1712F]">About Velqen</p>
-      <h1 className="mt-3 text-3xl font-bold text-[#16233D] md:text-4xl">
+      <h1 className="mt-3 text-3xl font-bold text-[#F1EDE4] md:text-4xl">
         We&apos;re not inventing a new category. We&apos;re fixing the annoying parts of one that already exists.
       </h1>
 
-      <div className="mt-8 space-y-6 text-base leading-relaxed text-[#5B6472]">
+      <div className="mt-8 space-y-6 text-base leading-relaxed text-[#98A2B8]">
         <p>
           Under-sink organisers already sell well, which told us the demand was real. What we found reading
           through customer complaints was that most of the frustration had nothing to do with looks — it was
@@ -29,7 +29,7 @@ export default function AboutPage() {
           yet. If the product earns its place, we&apos;ll expand from there. If it doesn&apos;t solve the problem properly,
           we&apos;d rather stop and fix it than push volume to defend the original idea.
         </p>
-        <p className="font-medium text-[#16233D]">
+        <p className="font-medium text-[#F1EDE4]">
           Our rule going forward: don&apos;t scale an assumption. Scale evidence.
         </p>
       </div>

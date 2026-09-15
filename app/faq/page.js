@@ -38,16 +38,16 @@ export default function FaqPage() {
   return (
     <div className="mx-auto max-w-3xl px-5 py-16">
       <p className="text-sm font-semibold uppercase tracking-wide text-[#C1712F]">FAQ</p>
-      <h1 className="mt-3 text-3xl font-bold text-[#16233D] md:text-4xl">Fit, plumbing &amp; the questions people actually ask</h1>
+      <h1 className="mt-3 text-3xl font-bold text-[#F1EDE4] md:text-4xl">Fit, plumbing &amp; the questions people actually ask</h1>
 
-      <div className="mt-10 divide-y divide-[#E4DFD1] rounded-2xl border border-[#E4DFD1] bg-white">
+      <div className="mt-10 divide-y divide-[#262D45] rounded-2xl border border-[#262D45] bg-[#161C2E]">
         {FAQS.map((item) => (
           <details key={item.q} className="group px-6 py-5">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-semibold text-[#16233D]">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-semibold text-[#F1EDE4]">
               {item.q}
               <span className="text-[#C1712F] transition group-open:rotate-45">+</span>
             </summary>
-            <p className="mt-3 text-sm leading-relaxed text-[#5B6472]">{item.a}</p>
+            <p className="mt-3 text-sm leading-relaxed text-[#98A2B8]">{item.a}</p>
           </details>
         ))}
       </div>

@@ -12,14 +12,14 @@ function SuccessContent() {
   return (
     <div className="mx-auto max-w-xl px-5 py-24 text-center">
       <CheckCircle2 className="mx-auto text-[#C1712F]" size={48} />
-      <h1 className="mt-6 text-3xl font-bold text-[#16233D]">Order received</h1>
-      {order && <p className="mt-2 text-sm text-[#5B6472]">Reference: {order}</p>}
-      <p className="mt-4 text-sm text-[#5B6472]">
+      <h1 className="mt-6 text-3xl font-bold text-[#F1EDE4]">Order received</h1>
+      {order && <p className="mt-2 text-sm text-[#98A2B8]">Reference: {order}</p>}
+      <p className="mt-4 text-sm text-[#98A2B8]">
         Thanks for your order. We&apos;ll be in touch with confirmation details.
       </p>
       <Link
         href="/"
-        className="mt-8 inline-block rounded-full bg-[#16233D] px-7 py-3 text-sm font-semibold text-white transition hover:bg-[#0F1830]"
+        className="mt-8 inline-block rounded-full bg-[#F1EDE4] px-7 py-3 text-sm font-semibold text-[#0E1420] transition hover:bg-[#DCD5C4]"
       >
         Back to home
       </Link>

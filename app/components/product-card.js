@@ -13,22 +13,22 @@ export default function ProductCard({ product }) {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-[#E4DFD1] bg-white transition hover:border-[#C1712F]"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-[#262D45] bg-[#161C2E] transition hover:border-[#C1712F]"
     >
-      <div className="aspect-[4/3] bg-[#F7F4EE]">
+      <div className="aspect-[4/3] bg-[#10162A]">
         {Illustration ? (
           <Illustration className="h-full w-full" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-sm text-[#9AA3B2]">
+          <div className="flex h-full w-full items-center justify-center text-sm text-[#98A2B8]">
             Image coming soon
           </div>
         )}
       </div>
       <div className="flex flex-1 flex-col gap-2 p-5">
         <p className="text-xs font-semibold uppercase tracking-wide text-[#C1712F]">{product.category}</p>
-        <p className="text-sm font-semibold text-[#16233D] group-hover:underline">{product.name}</p>
-        <p className="text-sm text-[#5B6472]">{product.cardBlurb}</p>
-        <p className="mt-auto pt-2 text-sm font-semibold text-[#16233D]">£{product.price.toFixed(2)}</p>
+        <p className="text-sm font-semibold text-[#F1EDE4] group-hover:underline">{product.name}</p>
+        <p className="text-sm text-[#98A2B8]">{product.cardBlurb}</p>
+        <p className="mt-auto pt-2 text-sm font-semibold text-[#F1EDE4]">£{product.price.toFixed(2)}</p>
       </div>
     </Link>
   );
