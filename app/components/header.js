@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useCart } from '@/app/context/cart-context';
 
 const NAV_LINKS = [
-  { href: '/product', label: 'Organiser' },
+  { href: '/products', label: 'Shop' },
   { href: '/about', label: 'About' },
   { href: '/faq', label: 'FAQ' },
   { href: '/contact', label: 'Contact' },

@@ -13,9 +13,9 @@ const outfit = Outfit({
 });
 
 export const metadata = {
-  title: 'Velqen | Adjustable 2-Tier Under-Sink Organiser',
+  title: 'Velqen | Everyday products, engineered around real problems',
   description:
-    'Pull-out under-sink storage built around your pipes. Adjustable width, anti-tip frame, reinforced rails. Designed for UK kitchen and bathroom cabinets.',
+    'Velqen builds better versions of everyday products, starting with a UK home organisation launch. Reliable first, styled second.',
 };
 
 export default function RootLayout({ children }) {

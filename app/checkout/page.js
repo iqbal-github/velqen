@@ -17,10 +17,10 @@ export default function CheckoutPage() {
       <div className="mx-auto max-w-2xl px-5 py-20 text-center">
         <h1 className="text-2xl font-bold text-[#16233D]">Your cart is empty</h1>
         <Link
-          href="/product"
+          href="/products"
           className="mt-8 inline-block rounded-full bg-[#16233D] px-7 py-3 text-sm font-semibold text-white transition hover:bg-[#0F1830]"
         >
-          Shop the organiser
+          Shop now
         </Link>
       </div>
     );

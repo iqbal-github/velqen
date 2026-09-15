@@ -7,17 +7,17 @@ export default function Footer() {
         <div>
           <p className="text-lg font-bold tracking-tight text-[#16233D]">VELQEN</p>
           <p className="mt-3 max-w-xs text-sm text-[#5B6472]">
-            Under-sink storage designed around real cabinets — pipes, wobble and all. Built reliable first,
-            styled second.
+            Everyday products, engineered around the problems people actually complain about. Built reliable
+            first, styled second.
           </p>
         </div>
 
         <div>
           <p className="text-sm font-semibold text-[#16233D]">Explore</p>
           <ul className="mt-3 space-y-2 text-sm text-[#5B6472]">
-            <li><Link href="/product" className="hover:text-[#16233D]">Under-Sink Organiser</Link></li>
+            <li><Link href="/products" className="hover:text-[#16233D]">Shop</Link></li>
             <li><Link href="/about" className="hover:text-[#16233D]">About Velqen</Link></li>
-            <li><Link href="/faq" className="hover:text-[#16233D]">Fit &amp; FAQ</Link></li>
+            <li><Link href="/faq" className="hover:text-[#16233D]">FAQ</Link></li>
             <li><Link href="/contact" className="hover:text-[#16233D]">Contact</Link></li>
           </ul>
         </div>
@@ -25,7 +25,7 @@ export default function Footer() {
         <div>
           <p className="text-sm font-semibold text-[#16233D]">Velqen Ltd</p>
           <p className="mt-3 text-sm text-[#5B6472]">
-            A UK-focused home organisation brand. Also available on Amazon UK.
+            A UK-based product brand. Also available on Amazon UK.
           </p>
         </div>
       </div>

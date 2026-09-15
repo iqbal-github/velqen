@@ -31,11 +31,11 @@ export function CartProvider({ children }) {
 
   const addItem = useCallback((product, qty = 1) => {
     setItems((prev) => {
-      const existing = prev.find((i) => i.id === product.id);
+      const existing = prev.find((i) => i.id === product.slug);
       if (existing) {
-        return prev.map((i) => (i.id === product.id ? { ...i, qty: i.qty + qty } : i));
+        return prev.map((i) => (i.id === product.slug ? { ...i, qty: i.qty + qty } : i));
       }
-      return [...prev, { id: product.id, name: product.name, price: product.price, qty }];
+      return [...prev, { id: product.slug, name: product.name, price: product.price, qty }];
     });
   }, []);
 

@@ -15,10 +15,10 @@ export default function CartPage() {
         <h1 className="text-2xl font-bold text-[#16233D]">Your cart is empty</h1>
         <p className="mt-3 text-sm text-[#5B6472]">Nothing here yet.</p>
         <Link
-          href="/product"
+          href="/products"
           className="mt-8 inline-block rounded-full bg-[#16233D] px-7 py-3 text-sm font-semibold text-white transition hover:bg-[#0F1830]"
         >
-          Shop the organiser
+          Shop now
         </Link>
       </div>
     );
