@@ -1,158 +1,80 @@
 'use client';
 
-import React, { createContext, useContext, useState } from 'react';
-import Link from 'next/link';
-import { X } from 'lucide-react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
-const CartContext = createContext();
+const CartContext = createContext(null);
+const STORAGE_KEY = 'velqen-cart';
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [items, setItems] = useState([]);
+  const [hydrated, setHydrated] = useState(false);
 
-  const addToCart = (product, quantity = 1) => {
-    setCart((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(STORAGE_KEY);
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from a client-only store (localStorage) on mount
+      if (raw) setItems(JSON.parse(raw));
+    } catch {
+      // ignore unavailable/blocked storage
+    }
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    } catch {
+      // ignore unavailable/blocked storage
+    }
+  }, [items, hydrated]);
+
+  const addItem = useCallback((product, qty = 1) => {
+    setItems((prev) => {
+      const existing = prev.find((i) => i.id === product.slug);
       if (existing) {
-        return prev.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-        );
+        return prev.map((i) => (i.id === product.slug ? { ...i, qty: i.qty + qty } : i));
       }
-      return [...prev, { ...product, quantity }];
+      return [...prev, { id: product.slug, name: product.name, price: product.price, qty }];
     });
-    setIsCartOpen(true);
-  };
+  }, []);
 
-  const updateQuantity = (id, change) => {
-    setCart((prev) =>
-      prev
-        .map((item) => {
-          if (item.id === id) {
-            const newQty = item.quantity + change;
-            return newQty > 0 ? { ...item, quantity: newQty } : null;
-          }
-          return item;
-        })
-        .filter(Boolean)
-    );
-  };
+  const updateQty = useCallback((id, qty) => {
+    setItems((prev) => {
+      if (qty <= 0) return prev.filter((i) => i.id !== id);
+      return prev.map((i) => (i.id === id ? { ...i, qty } : i));
+    });
+  }, []);
 
-  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
-  const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const removeItem = useCallback((id) => {
+    setItems((prev) => prev.filter((i) => i.id !== id));
+  }, []);
 
-  return (
-    <CartContext.Provider
-      value={{ cart, isCartOpen, setIsCartOpen, addToCart, updateQuantity, totalItems, subtotal }}
-    >
-      {children}
+  const clearCart = useCallback(() => setItems([]), []);
 
-      {/* NEXT.CO.UK STYLE MINI-BAG DROPDOWN */}
-      {isCartOpen && (
-        <div className="fixed inset-0 z-50 overflow-hidden font-sans">
-          <div
-            onClick={() => setIsCartOpen(false)}
-            className="absolute inset-0 bg-black/20 backdrop-blur-[1px] transition-opacity"
-          />
-
-          <div className="absolute top-20 right-4 sm:right-10 w-[92vw] max-w-[400px] bg-white rounded-none border border-neutral-200 shadow-2xl z-50">
-            
-            {/* Header */}
-            <div className="px-5 py-4 border-b border-neutral-100 flex items-center justify-between">
-              <span className="font-extrabold text-xs tracking-wider uppercase text-neutral-900" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                {totalItems} {totalItems === 1 ? 'ITEM' : 'ITEMS'} IN BAG
-              </span>
-              <button
-                onClick={() => setIsCartOpen(false)}
-                className="text-neutral-400 hover:text-neutral-900 transition p-1"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Product Item List */}
-            <div className="p-5 max-h-[320px] overflow-y-auto space-y-4">
-              {cart.length === 0 ? (
-                <div className="text-center py-6 text-xs text-neutral-500">
-                  Your bag is currently empty.
-                </div>
-              ) : (
-                cart.map((item) => (
-                  <div key={item.id} className="flex gap-4 items-start pb-4 border-b border-neutral-100 last:border-0 last:pb-0">
-                    <div className="w-20 h-20 bg-neutral-100 flex-shrink-0 overflow-hidden border border-neutral-200">
-                      <img
-                        src={item.images ? item.images[0] : item.image}
-                        alt={item.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-
-                    <div className="flex-1 flex justify-between gap-2">
-                      <div className="space-y-0.5">
-                        <h4 className="font-bold text-xs text-neutral-900 leading-snug line-clamp-2" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                          {item.name}
-                        </h4>
-                        <p className="text-xs text-neutral-500">Size: ONE</p>
-                        <p className="text-xs text-neutral-500">Quantity: {item.quantity}</p>
-                        <p className="text-xs font-semibold text-[#2e7d32] pt-0.5">In Stock</p>
-                      </div>
-
-                      <div className="text-right flex-shrink-0">
-                        <span className="font-bold text-xs text-neutral-900">
-                          £{(item.price * item.quantity).toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-
-            {/* Summary & Buttons */}
-            {cart.length > 0 && (
-              <div className="px-5 py-4 border-t border-neutral-100 bg-neutral-50/50 space-y-3">
-                <div className="flex justify-between items-baseline">
-                  <span className="font-extrabold text-sm text-neutral-900" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                    Total
-                  </span>
-                  <span className="font-extrabold text-base text-neutral-900" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                    £{subtotal.toFixed(2)}
-                  </span>
-                </div>
-
-                <p className="text-[11px] text-neutral-500">
-                  Excluding UK Standard Delivery (Normally £0.00)
-                </p>
-
-                <div className="grid grid-cols-2 gap-3 pt-1">
-                  {/* VIEW BAG Button Links to /bag */}
-                  <Link
-                    href="/bag"
-                    onClick={() => setIsCartOpen(false)}
-                    className="w-full py-3 bg-white hover:bg-neutral-50 text-neutral-900 text-xs font-extrabold uppercase tracking-wider border border-neutral-900 transition text-center flex items-center justify-center"
-                    style={{ fontFamily: "'Outfit', sans-serif" }}
-                  >
-                    View Bag
-                  </Link>
-
-                  <Link
-                    href="/bag"
-                    onClick={() => setIsCartOpen(false)}
-                    className="w-full py-3 bg-neutral-950 hover:bg-neutral-800 text-white text-xs font-extrabold uppercase tracking-wider transition text-center flex items-center justify-center"
-                    style={{ fontFamily: "'Outfit', sans-serif" }}
-                  >
-                    Checkout
-                  </Link>
-                </div>
-              </div>
-            )}
-
-          </div>
-        </div>
-      )}
-    </CartContext.Provider>
+  const { count, subtotal } = useMemo(
+    () =>
+      items.reduce(
+        (acc, i) => {
+          acc.count += i.qty;
+          acc.subtotal += i.qty * i.price;
+          return acc;
+        },
+        { count: 0, subtotal: 0 }
+      ),
+    [items]
   );
+
+  const value = useMemo(
+    () => ({ items, addItem, updateQty, removeItem, clearCart, count, subtotal, hydrated }),
+    [items, addItem, updateQty, removeItem, clearCart, count, subtotal, hydrated]
+  );
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
-export const useCart = () => useContext(CartContext);
+export function useCart() {
+  const ctx = useContext(CartContext);
+  if (!ctx) throw new Error('useCart must be used within CartProvider');
+  return ctx;
+}

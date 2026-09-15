@@ -1,22 +1,31 @@
+import { Inter, Outfit } from 'next/font/google';
 import './globals.css';
 import { CartProvider } from '@/app/context/cart-context';
+import Header from '@/app/components/header';
+import Footer from '@/app/components/footer';
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+const outfit = Outfit({
+  subsets: ['latin'],
+  weight: ['500', '600', '700', '800'],
+  variable: '--font-outfit',
+  display: 'swap',
+});
 
 export const metadata = {
-  title: 'Velqen | Everyday Carry & Streetwear Silhouettes UK',
-  description: 'Ultra-lightweight nylon crescent bags, canvas utility totes, and slings engineered in the UK.',
+  title: 'Velqen | Everyday products, engineered around real problems',
+  description:
+    'Velqen builds better versions of everyday products, starting with a UK home organisation launch. Reliable first, styled second.',
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
-      </head>
-      <body className="bg-[#F4EFE6] text-[#151C12] antialiased" style={{ fontFamily: "'Inter', sans-serif" }}>
+    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
+      <body className="antialiased">
         <CartProvider>
-          {children}
+          <Header />
+          <main>{children}</main>
+          <Footer />
         </CartProvider>
       </body>
     </html>
