@@ -10,6 +10,16 @@ export const products = [
     cardBlurb: 'Adjustable pull-out storage designed around your pipes, not against them.',
     intro:
       "Most under-sink organisers fight the plumbing instead of working around it. Velqen's adjustable frame is built to fit your cabinet width, clear the U-bend, and stay stable even fully loaded and pulled all the way out.",
+    lifestyleImage: '/products/under-sink-organiser/lifestyle.jpg',
+    colors: [
+      { name: 'Black', hex: '#1C1C1C', image: '/products/under-sink-organiser/black.jpg' },
+      { name: 'White', hex: '#F2F2F0', image: '/products/under-sink-organiser/white.jpg' },
+      { name: 'Grey', hex: '#8A8D91', image: '/products/under-sink-organiser/grey.jpg' },
+      { name: 'Navy Blue', hex: '#2B3A55', image: '/products/under-sink-organiser/navy.jpg' },
+      { name: 'Sage Green', hex: '#7C9070', image: '/products/under-sink-organiser/sage-green.jpg' },
+      { name: 'Mustard', hex: '#D8A62A', image: '/products/under-sink-organiser/mustard.jpg' },
+      { name: 'Purple', hex: '#8B7BB8', image: '/products/under-sink-organiser/purple.jpg' },
+    ],
     problems: [
       {
         title: 'Poor cabinet fit',

@@ -1,7 +1,7 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Sparkles, Ruler, ShieldCheck, MapPin, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { products } from '@/app/data/products';
-import OrganiserDiagram from '@/app/components/organiser-diagram';
 
 const TRUST_STRIP = [
   { icon: Ruler, label: 'Adjustable to fit real cabinets' },
@@ -86,7 +86,16 @@ export default function Home() {
               aria-hidden
               className="pointer-events-none absolute inset-0 -z-10 translate-x-4 translate-y-4 rounded-2xl bg-[#16233D]/5"
             />
-            <OrganiserDiagram className="w-full rounded-2xl border border-[#E4DFD1] bg-white shadow-sm" />
+            <div className="relative aspect-[11/10] w-full overflow-hidden rounded-2xl border border-[#E4DFD1] bg-white shadow-sm">
+              <Image
+                src={products[0].lifestyleImage}
+                alt={products[0].name}
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover"
+                priority
+              />
+            </div>
           </div>
         </div>
       </section>
