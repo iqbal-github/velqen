@@ -1,4 +1,5 @@
 import { Inter, Outfit } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import { CartProvider } from '@/app/context/cart-context';
 import Header from '@/app/components/header';
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
           <main>{children}</main>
           <Footer />
         </CartProvider>
+        <Analytics />
       </body>
     </html>
   );
